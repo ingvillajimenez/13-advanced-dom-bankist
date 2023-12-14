@@ -37,9 +37,9 @@ document.addEventListener("keydown", function (e) {
 // Selecting, Creating and Deleting Elements
 
 // - Selecting elements
-console.log(document.documentElement);
-console.log(document.head);
-console.log(document.body);
+console.log(document.documentElement); // html element
+console.log(document.head); // head element
+console.log(document.body); // body element
 
 const header = document.querySelector(".header");
 const allSections = document.querySelectorAll(".section"); // NodeList
@@ -73,3 +73,52 @@ document
     // message.remove(); // remove element
     message.parentElement.removeChild(message); // DOM traversing
   });
+
+///////////////////////////////////////
+// Styles, Attributes and Classes
+
+// - Styles
+message.style.backgroundColor = "#37383d";
+message.style.width = "120%";
+
+console.log(message.style.color); // no answer because it shows only inline styles
+console.log(message.style.backgroundColor); // rgb(55, 56, 61)
+
+console.log(getComputedStyle(message).color); // rgb(187, 187, 187)
+console.log(getComputedStyle(message).height); // 43px
+
+message.style.height =
+  Number.parseFloat(getComputedStyle(message).height, 10) + 30 + "px";
+
+document.documentElement.style.setProperty("--color-primary", "orangered"); // setting a custom css property
+
+// - Attributes
+const logo = document.querySelector(".nav__logo");
+console.log(logo.alt); // Bankist logo
+console.log(logo.className); // nav__logo
+
+logo.alt = "Beautiful minimalist logo";
+
+// Non-standard
+console.log(logo.designer); // undefined -> Only shows standard attributes
+console.log(logo.getAttribute("designer")); // Jonas -> This way can show non-standard attributes
+logo.setAttribute("company", "Bankist");
+
+console.log(logo.src); // http://127.0.0.1:8081/img/logo.png -> absolute url
+console.log(logo.getAttribute("src")); // img/logo.png -> relative url
+
+const link = document.querySelector(".nav__link--btn");
+console.log(link.href); // http://127.0.0.1:8081/# -> absolute url
+console.log(link.getAttribute("href")); // # -> relative url
+
+// Data attributes
+console.log(logo.dataset.versionNumber); // 3.0
+
+// - Clases
+logo.classList.add("c", "j");
+logo.classList.remove("c", "j");
+logo.classList.toggle("c");
+logo.classList.contains("c"); // not includes
+
+// Don't use
+logo.className = "jonas";
