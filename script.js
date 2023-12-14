@@ -1,15 +1,17 @@
 "use strict";
 
+const modal = document.querySelector(".modal");
+const overlay = document.querySelector(".overlay");
+const btnCloseModal = document.querySelector(".btn--close-modal");
+const btnsOpenModal = document.querySelectorAll(".btn--show-modal");
+const btnScrollTo = document.querySelector(".btn--scroll-to");
+const section1 = document.querySelector("#section--1");
+
 ///////////////////////////////////////
 // Project: "Bankist" Website
 
 ///////////////////////////////////////
 // Modal window
-
-const modal = document.querySelector(".modal");
-const overlay = document.querySelector(".overlay");
-const btnCloseModal = document.querySelector(".btn--close-modal");
-const btnsOpenModal = document.querySelectorAll(".btn--show-modal");
 
 const openModal = function (e) {
   e.preventDefault(); // prevent default anchor behavior to jump the page because of hfer="#"
@@ -32,6 +34,78 @@ document.addEventListener("keydown", function (e) {
     closeModal();
   }
 });
+
+///////////////////////////////////////
+// Implementing Smooth Scrolling
+
+// Button scrolling
+btnScrollTo.addEventListener("click", function (e) {
+  const s1coords = section1.getBoundingClientRect();
+  console.log(s1coords); // position relative to viewport (section--1's coordinates)
+
+  console.log(e.target.getBoundingClientRect()); // position relative to viewport (button's coordinates)
+
+  console.log(
+    "Current scroll position (X/Y)",
+    window.pageXOffset,
+    window.pageYOffset
+  ); // (scrolling information) -> for example diference between top of the page and top of the viewport for Y scroll
+
+  console.log(
+    "height/width viewport",
+    document.documentElement.clientHeight,
+    document.documentElement.clientWidth
+  ); // viewport height and widgth (dimensions)
+
+  // Scrolling
+  // window.scrollTo(
+  //   s1coords.left + window.pageXOffset,
+  //   s1coords.top + window.pageYOffset
+  // );
+
+  // Smooth Scrolling -> current element position + current page scroll
+  // window.scrollTo({
+  //   left: s1coords.left + window.pageXOffset,
+  //   top: s1coords.top + window.pageYOffset,
+  //   behavior: "smooth",
+  // });
+
+  section1.scrollIntoView({ behavior: "smooth" });
+});
+
+///////////////////////////////////////
+// Event Delegation: Implementing Page Navigation
+
+// Implement event delegation using event bubbling
+// Page navigation
+
+// Attach an event listener for each element is not efficient and can cause performance issues
+// document.querySelectorAll(".nav__link").forEach(function (el) {
+//   el.addEventListener("click", function (e) {
+//     e.preventDefault(); // prevent default fast navigation to the href by the anchor
+//     const id = this.getAttribute("href"); // realtive url
+//     console.log(id); // #section--1, #section--2, #section-- 3
+//     document.querySelector(id).scrollIntoView({ behavior: "smooth" }); // smooth scrolling
+//   });
+// });
+
+// Event delegation
+// 1. Add event listener to common parent element
+// 2. Determine what element originated the event
+
+document.querySelector(".nav__links").addEventListener("click", function (e) {
+  e.preventDefault();
+  // console.log(e.target); // where the event happened
+
+  // Matching strategy
+  if (e.target.classList.contains("nav__link")) {
+    // e.target -> element which originated the event
+    const id = e.target.getAttribute("href");
+    // console.log(id);
+    document.querySelector(id).scrollIntoView({ behavior: "smooth" });
+  }
+});
+
 /*
 ///////////////////////////////////////
 // Selecting, Creating and Deleting Elements
@@ -73,6 +147,7 @@ document
     // message.remove(); // remove element
     message.parentElement.removeChild(message); // DOM traversing
   });
+
 
 ///////////////////////////////////////
 // Styles, Attributes and Classes
@@ -122,48 +197,8 @@ logo.classList.contains("c"); // not includes
 
 // Don't use
 logo.className = "jonas";
-*/
 
-///////////////////////////////////////
-// Implementing Smooth Scrolling
 
-const btnScrollTo = document.querySelector(".btn--scroll-to");
-const section1 = document.querySelector("#section--1");
-
-btnScrollTo.addEventListener("click", function (e) {
-  const s1coords = section1.getBoundingClientRect();
-  console.log(s1coords); // position relative to viewport (section--1's coordinates)
-
-  console.log(e.target.getBoundingClientRect()); // position relative to viewport (button's coordinates)
-
-  console.log(
-    "Current scroll position (X/Y)",
-    window.pageXOffset,
-    window.pageYOffset
-  ); // (scrolling information) -> for example diference between top of the page and top of the viewport for Y scroll
-
-  console.log(
-    "height/width viewport",
-    document.documentElement.clientHeight,
-    document.documentElement.clientWidth
-  ); // viewport height and widgth (dimensions)
-
-  // Scrolling
-  // window.scrollTo(
-  //   s1coords.left + window.pageXOffset,
-  //   s1coords.top + window.pageYOffset
-  // );
-
-  // Smooth Scrolling -> current element position + current page scroll
-  // window.scrollTo({
-  //   left: s1coords.left + window.pageXOffset,
-  //   top: s1coords.top + window.pageYOffset,
-  //   behavior: "smooth",
-  // });
-
-  section1.scrollIntoView({ behavior: "smooth" });
-});
-/*
 ///////////////////////////////////////
 // Types of Events and Event Handlers
 
@@ -179,10 +214,11 @@ h1.addEventListener("mouseenter", alertH1);
 
 setTimeout(() => h1.removeEventListener("mouseenter", alertH1), 3000); // removing event listener after certain time
 
+// Using on event property = event handler function
 // h1.onmouseenter = function (e) {
 //   alert("onmouseenter: Great! You are reading the heading :D");
 // };
-*/
+
 
 ///////////////////////////////////////
 // Event Propagation in Practice
@@ -220,3 +256,4 @@ document.querySelector(".nav").addEventListener(
   }
   // true -> third parameter true = event happens in the capturing phase
 );
+*/
