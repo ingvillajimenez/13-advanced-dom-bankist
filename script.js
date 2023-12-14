@@ -89,7 +89,7 @@ btnScrollTo.addEventListener("click", function (e) {
 //   });
 // });
 
-// Event delegation
+// Event delegation -> this strategy is more efficient
 // 1. Add event listener to common parent element
 // 2. Determine what element originated the event
 
@@ -232,7 +232,7 @@ const randomColor = () =>
 document.querySelector(".nav__link").addEventListener("click", function (e) {
   this.style.backgroundColor = randomColor();
   console.log("LINK", e.target, e.currentTarget); // e.target -> event happens, e.currentTarget -> event handler is attached to
-  console.log(e.currentTarget === this); // true -> this is the current target where the event handler is attached to
+  console.log(e.currentTarget === this); // true -> "this" is the current target where the event handler is attached to
   // e.target === e.currentTarget -> event happens in the target phase
 
   // Stop propagation
@@ -256,4 +256,36 @@ document.querySelector(".nav").addEventListener(
   }
   // true -> third parameter true = event happens in the capturing phase
 );
+
+///////////////////////////////////////
+// DOM Traversing
+
+const h1 = document.querySelector("h1");
+
+// Going downwards: child elements
+console.log(h1.querySelectorAll(".highlight")); // NodeList(2) [span.highlight, span.highlight] -> all children
+console.log(h1.childNodes); // NodeList(9) [text, comment, text, span.highlight, text, br, text, span.highlight, text]
+console.log(h1.children); // HTMLCollection(3) [span.highlight, br, span.highlight] -> direct children
+h1.firstElementChild.style.color = "white"; // <span class="highlight">banking</span> -> text color is set to white
+h1.lastElementChild.style.color = "orangered"; // <span class="highlight">minimalist</span> -> text color is set to orangered
+
+// Going upwards: parents elements
+console.log(h1.parentNode); // div.header__title
+console.log(h1.parentElement); // div.header__title
+
+h1.closest(".header").style.background = "var(--gradient-secondary)"; // find the closest parent element with the class .header
+h1.closest("h1").style.background = "var(--gradient-primary)"; // find the closest element h1 no matter how far up it is
+
+// Going sideways: siblings elements
+console.log(h1.previousElementSibling); // null
+console.log(h1.nextElementSibling); // <h4>A simpler banking experience for a simpler life.</h4>
+
+console.log(h1.previousSibling); // #text
+console.log(h1.nextSibling); // #text
+
+console.log(h1.parentElement.children); // HTMLCollection(4) [h1, h4, button.btn--text.btn--scroll-to, img.header__img]
+
+[...h1.parentElement.children].forEach(function (el) {
+  if (el !== h1) el.style.transform = "scale(0.5)"; // it is posible to compare DOM elements
+});
 */
