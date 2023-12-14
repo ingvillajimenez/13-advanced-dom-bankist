@@ -106,6 +106,37 @@ document.querySelector(".nav__links").addEventListener("click", function (e) {
   }
 });
 
+///////////////////////////////////////
+// Building a Tabbed Component
+
+const tabs = document.querySelectorAll(".operations__tab");
+const tabsContainer = document.querySelector(".operations__tab-container");
+const tabsContent = document.querySelectorAll(".operations__content");
+
+// tabs.forEach((t) => t.addEventListener("click", () => console.log("TAB"))); // No eficcient solution
+
+// Event delegation
+tabsContainer.addEventListener("click", function (e) {
+  const clicked = e.target.closest(".operations__tab"); // finds the closest parent with the .operations__tab classname
+  // console.log(clicked); // null when "tabsContainer" parent element (div) is clicked
+
+  // Guard clause
+  if (!clicked) return; // no click on any of the .operations__tab elements (buttons)
+
+  // Remove active classes
+  tabs.forEach((t) => t.classList.remove("operations__tab--active")); // remove the class on all of them
+  tabsContent.forEach((c) => c.classList.remove("operations__content--active"));
+
+  // Activate tab
+  clicked.classList.add("operations__tab--active"); // add the class on the clicked one
+
+  // Activate content area
+  // console.log(clicked.dataset.tab); // attribute data-tab -> property dataset.tab
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add("operations__content--active");
+});
+
 /*
 ///////////////////////////////////////
 // Selecting, Creating and Deleting Elements
