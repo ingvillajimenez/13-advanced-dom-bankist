@@ -32,7 +32,6 @@ document.addEventListener("keydown", function (e) {
     closeModal();
   }
 });
-
 /*
 ///////////////////////////////////////
 // Selecting, Creating and Deleting Elements
@@ -164,3 +163,22 @@ btnScrollTo.addEventListener("click", function (e) {
 
   section1.scrollIntoView({ behavior: "smooth" });
 });
+
+///////////////////////////////////////
+// Types of Events and Event Handlers
+
+const h1 = document.querySelector("h1");
+
+const alertH1 = function (e) {
+  alert("addEventListener: Great! You are reading the heading :D");
+
+  // h1.removeEventListener("mouseenter", alertH1); // removing event listener inside event handler function
+};
+
+h1.addEventListener("mouseenter", alertH1);
+
+setTimeout(() => h1.removeEventListener("mouseenter", alertH1), 3000); // removing event listener after certain time
+
+// h1.onmouseenter = function (e) {
+//   alert("onmouseenter: Great! You are reading the heading :D");
+// };
