@@ -160,6 +160,25 @@ const handleHover = function (e) {
 nav.addEventListener("mouseover", handleHover.bind(0.5));
 nav.addEventListener("mouseout", handleHover.bind(1));
 
+///////////////////////////////////////
+// Implementing a Sticky Navigation: The Scroll Event
+
+// Sticky navigation
+
+const initialCoords = section1.getBoundingClientRect();
+console.log(initialCoords); // element coordinates relative to the viewport
+
+// Scroll event is not so efficient and should be avoided because it is bad for performance. Event is listened on the window object
+window.addEventListener("scroll", function () {
+  console.log(window.scrollY); // scroll Y on window (diference between top of the page and top of the viewport), the "event" object is useless
+
+  if (window.scrollY > initialCoords.top) {
+    nav.classList.add("sticky");
+  } else {
+    nav.classList.remove("sticky");
+  }
+});
+
 /*
 ///////////////////////////////////////
 // Selecting, Creating and Deleting Elements
