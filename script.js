@@ -557,14 +557,14 @@ console.log(h1.parentElement.children); // HTMLCollection(4) [h1, h4, button.bt
 [...h1.parentElement.children].forEach(function (el) {
   if (el !== h1) el.style.transform = "scale(0.5)"; // it is posible to compare DOM elements
 });
-*/
+
 
 ///////////////////////////////////////
 // Lifecycle DOM Events
 
 // Webpage lifecycle -> Since page is loaded until user leave the page
 
-// DOMContentLoaded -> All HTML loaded and, JS downloaded and executed
+// DOMContentLoaded -> All HTML is loaded and, JS is downloaded and executed
 document.addEventListener("DOMContentLoaded", function (e) {
   console.log("HTML parsed and DOM tree built!", e);
 });
@@ -580,3 +580,4 @@ window.addEventListener("load", function (e) {
 //   console.log(e);
 //   e.returnValue = ""; // Display a leaving confirmation
 // });
+*/
