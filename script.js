@@ -558,3 +558,25 @@ console.log(h1.parentElement.children); // HTMLCollection(4) [h1, h4, button.bt
   if (el !== h1) el.style.transform = "scale(0.5)"; // it is posible to compare DOM elements
 });
 */
+
+///////////////////////////////////////
+// Lifecycle DOM Events
+
+// Webpage lifecycle -> Since page is loaded until user leave the page
+
+// DOMContentLoaded -> All HTML loaded and, JS downloaded and executed
+document.addEventListener("DOMContentLoaded", function (e) {
+  console.log("HTML parsed and DOM tree built!", e);
+});
+
+// load -> HTML, images and external resources like CSS files are completely loaded
+window.addEventListener("load", function (e) {
+  console.log("Page fully loaded", e);
+});
+
+// beforeunload -> just before user is about to leave the page
+// window.addEventListener("beforeunload", function (e) {
+//   e.preventDefault(); // others than Chrome require prevent the default behavior
+//   console.log(e);
+//   e.returnValue = ""; // Display a leaving confirmation
+// });
